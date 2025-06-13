@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Annotation profile for certificado-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath>
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+        </processorPath>
+        <module name="certificado-service" />
+        <module name="usuario-service" />
+        <module name="curso-service" />
+        <module name="avaliacao-service" />
+        <module name="pagamento-service" />
+        <module name="gateway-service" />
+        <module name="conteudo-service" />
+      </profile>
+      <profile name="Annotation profile for matricula-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+        </processorPath>
+        <module name="matricula-service" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="avaliacao-service" options="-parameters" />
+      <module name="certificado-service" options="-parameters" />
+      <module name="conteudo-service" options="-parameters" />
+      <module name="curso-service" options="-parameters" />
+      <module name="gateway-service" options="-parameters" />
+      <module name="matricula-service" options="-parameters" />
+      <module name="pagamento-service" options="-parameters" />
+      <module name="usuario-service" options="-parameters" />
+    </option>
+  </component>
+</project>
