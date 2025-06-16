@@ -3,29 +3,18 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Annotation profile for certificado-service" enabled="true">
+      <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <processorPath>
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-        </processorPath>
         <module name="certificado-service" />
         <module name="usuario-service" />
         <module name="curso-service" />
         <module name="avaliacao-service" />
-        <module name="pagamento-service" />
         <module name="gateway-service" />
-        <module name="conteudo-service" />
-      </profile>
-      <profile name="Annotation profile for matricula-service" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-        </processorPath>
+        <module name="pagamento-service" />
         <module name="matricula-service" />
+        <module name="conteudo-service" />
       </profile>
     </annotationProcessing>
   </component>
