@@ -1,14 +1,24 @@
 package br.com.solutis.usuario_service.service;
 
+import br.com.solutis.usuario_service.entity.Usuario;
 import io.jsonwebtoken.JwtException;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Base64;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TokenService {
@@ -16,7 +26,7 @@ public class TokenService {
     private static final Logger logger = LoggerFactory.getLogger(TokenService.class);
     private final Key secretKey;
 
-    public TokenService(@Value("${jwt.secret}") String secretKeyBase64){
+    public TokenService(@Value("${jwt.secret}") String secretKeyBase64) {
         try {
             this.secretKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secretKeyBase64));
             logger.info("Chave secreta carregada com sucesso no TokenService");
@@ -26,24 +36,26 @@ public class TokenService {
         }
     }
 
-    public String gerarToken(String username) {
-        return io.jsonwebtoken.Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(new java.util.Date())
-                .setExpiration(new java.util.Date(System.currentTimeMillis() + 1000 * 60 * 60))
-                .signWith(secretKey, io.jsonwebtoken.SignatureAlgorithm.HS512)
+    public String gerarToken(Usuario autenticado) {
+        return Jwts.builder()
+                .setSubject(String.valueOf(autenticado.getId()))
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hora
+                .signWith(secretKey, SignatureAlgorithm.HS512)
+                .claim("roles", Collections.singletonList(autenticado.getTipoUsuario().getRole()))
+                .claim("email", autenticado.getEmail())
                 .compact();
     }
 
     public String extrairUsername(String token) {
         try {
-            return io.jsonwebtoken.Jwts.parserBuilder()
+            return Jwts.parserBuilder()
                     .setSigningKey(secretKey)
                     .build()
                     .parseClaimsJws(token)
                     .getBody()
                     .getSubject();
-        } catch (io.jsonwebtoken.JwtException e) {
+        } catch (JwtException e) {
             logger.warn("Falha ao extrair username do token: {}", e.getMessage());
             throw new IllegalArgumentException("Token inválido", e);
         }
@@ -51,7 +63,7 @@ public class TokenService {
 
     public boolean validarToken(String token) {
         try {
-            io.jsonwebtoken.Jwts.parserBuilder()
+            Jwts.parserBuilder()
                     .setSigningKey(secretKey)
                     .build()
                     .parseClaimsJws(token);
@@ -66,4 +78,20 @@ public class TokenService {
         }
     }
 
+    public Authentication getAuthentication(String token) {
+        var claims = Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        String userId = claims.getSubject();
+        List<String> roles = claims.get("roles", List.class);
+
+        List<SimpleGrantedAuthority> authorities = roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+
+        return new UsernamePasswordAuthenticationToken(userId, null, authorities);
+    }
 }

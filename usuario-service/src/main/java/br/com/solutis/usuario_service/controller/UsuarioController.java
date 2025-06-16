@@ -8,6 +8,7 @@ import br.com.solutis.usuario_service.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,19 +33,24 @@ public class UsuarioController {
     public ResponseEntity<UsuarioTokenResponseDto> login(@RequestBody @Valid UsuarioLoginDto dto) {
         Usuario usuario = UsuarioMapper.toEntityLogin(dto);
         Usuario usuarioAutenticado = service.autenticar(usuario);
-        String token = tokenService.gerarToken(usuarioAutenticado.getEmail());
+        String token = tokenService.gerarToken(usuarioAutenticado);
         UsuarioTokenResponseDto response = UsuarioMapper.toTokenResponseDto(usuarioAutenticado, token);
         return ResponseEntity.status(200).body(response);
     }
 
+    @PreAuthorize("hasRole('PROFESSOR')")
     @GetMapping
-    public ResponseEntity<List<UsuarioResponseDto>> listar(){
+    public ResponseEntity<List<UsuarioResponseDto>> listar() {
         List<Usuario> usuarios = service.listarUsuario();
-        List<UsuarioResponseDto> usuariosResponse = usuarios.stream().map(UsuarioMapper::toResponseDto).toList();
-        if (usuarios == null || usuarios.isEmpty()) {
-            return ResponseEntity.status(204).build();
+        List<UsuarioResponseDto> usuariosResponse = usuarios.stream()
+                .map(UsuarioMapper::toResponseDto)
+                .toList();
+
+        if (usuariosResponse.isEmpty()) {
+            return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.status(200).body(usuariosResponse);
+
+        return ResponseEntity.ok(usuariosResponse);
     }
 
     @GetMapping("/{id}")
