@@ -26,6 +26,15 @@ public class CursoMapper {
                 entity.getPreco(),
                 entity.getCategoria()
         );
+    }
 
+    public static Curso updateCurso(Curso cursoExistente, CursoRequestDto updateCurso) {
+
+        cursoExistente.setNome(updateCurso.nome());
+        cursoExistente.setDescricao(updateCurso.descricao());
+        cursoExistente.setPreco(updateCurso.preco());
+        cursoExistente.setCategoria(updateCurso.categoria());
+
+        return cursoExistente;
     }
 }

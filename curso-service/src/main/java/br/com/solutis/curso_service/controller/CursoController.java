@@ -2,6 +2,7 @@ package br.com.solutis.curso_service.controller;
 
 import br.com.solutis.curso_service.dto.CursoRequestDto;
 import br.com.solutis.curso_service.dto.CursoResponseDto;
+import br.com.solutis.curso_service.entity.Curso;
 import br.com.solutis.curso_service.service.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -56,5 +57,10 @@ public class CursoController {
         service.deletarCursoPorId(id);
 
         return ResponseEntity.status(204).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Curso> atualizarCursoPorId(@PathVariable Long id, @RequestBody CursoRequestDto request) {
+        return ResponseEntity.status(200).body(service.atualizarCursoPorId(id, request));
     }
 }

@@ -56,4 +56,12 @@ public class CursoService {
         curso.orElseThrow(() -> new CursoNaoEncontradoException("Curso de id %d não encontrado".formatted(id)));
     }
 
+    public Curso atualizarCursoPorId(Long id, CursoRequestDto request) {
+        Curso cursoExistente = repository.findById(id).orElseThrow(() -> new CursoNaoEncontradoException("Curso não encontrado"));
+
+        CursoMapper.updateCurso(cursoExistente, request);
+
+        return cursoExistente;
+    }
+
 }
