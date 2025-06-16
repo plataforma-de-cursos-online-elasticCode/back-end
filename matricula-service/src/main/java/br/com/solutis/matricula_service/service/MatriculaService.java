@@ -42,4 +42,16 @@ public class MatriculaService {
         return matricula;
     }
 
+    public List<Matricula> listarMatriculasPorAluno(Long id) {
+        if (id == null) return null;
+
+        return repository.findAllByAlunoId(id);
+    }
+
+    public List<Matricula> listarMatriculasPorCursoId(Long id) {
+        if (id == null) return null;
+
+        return repository.findAllByCursoId(id);
+    }
+
 }

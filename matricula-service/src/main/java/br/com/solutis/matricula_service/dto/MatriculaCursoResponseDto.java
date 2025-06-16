@@ -8,11 +8,10 @@ import java.time.LocalDate;
 
 @Setter
 @AllArgsConstructor
-public class MatriculaResponseDto {
+public class MatriculaCursoResponseDto {
 
     private Long id;
     private String nomeAluno;
-    private String nomeCurso;
     private Status status;
     private LocalDate dataMatricula;
 
