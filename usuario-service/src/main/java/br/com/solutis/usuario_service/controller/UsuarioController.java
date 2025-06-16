@@ -1,10 +1,9 @@
 package br.com.solutis.usuario_service.controller;
 
-import br.com.solutis.usuario_service.dto.UsuarioRequestDto;
-import br.com.solutis.usuario_service.dto.UsuarioResponseDto;
-import br.com.solutis.usuario_service.dto.UsuarioUpdateDto;
+import br.com.solutis.usuario_service.dto.*;
 import br.com.solutis.usuario_service.entity.Usuario;
 import br.com.solutis.usuario_service.mapper.UsuarioMapper;
+import br.com.solutis.usuario_service.service.TokenService;
 import br.com.solutis.usuario_service.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +18,23 @@ import java.util.List;
 public class UsuarioController {
 
     private final UsuarioService service;
+    private final TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<UsuarioResponseDto> cadastrar(@RequestBody @Valid UsuarioRequestDto dto){
+    public ResponseEntity<UsuarioTokenResponseDto> cadastrar(@RequestBody @Valid UsuarioRequestDto dto){
         Usuario usuario = UsuarioMapper.toEntity(dto);
-        service.cadastrarUsuario(usuario);
-        UsuarioResponseDto usuarioSalvo = UsuarioMapper.toResponseDto(usuario);
-        return ResponseEntity.status(201).body(usuarioSalvo);
+        Usuario usuarioSalvo = service.cadastrarUsuario(usuario);
+        String token = tokenService.gerarToken(usuarioSalvo.getEmail());
+        UsuarioTokenResponseDto response = UsuarioMapper.toTokenResponseDto(usuarioSalvo, token);
+        return ResponseEntity.status(201).body(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UsuarioResponseDto> login(@RequestBody @Valid UsuarioLoginDto dto) {
+        Usuario usuario = UsuarioMapper.toEntityLogin(dto);
+        Usuario usuarioAutenticado = service.autenticar(usuario);
+        UsuarioResponseDto response = UsuarioMapper.toResponseDto(usuarioAutenticado);
+        return ResponseEntity.status(200).body(response);
     }
 
     @GetMapping
@@ -58,5 +67,4 @@ public class UsuarioController {
         service.removerUsuario(id);
         return ResponseEntity.status(204).build();
     }
-
 }

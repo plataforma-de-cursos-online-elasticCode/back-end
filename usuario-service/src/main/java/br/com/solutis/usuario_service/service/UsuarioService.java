@@ -6,6 +6,7 @@ import br.com.solutis.usuario_service.exception.EntidadeConflitoException;
 import br.com.solutis.usuario_service.exception.EntidadeNaoEncontrada;
 import br.com.solutis.usuario_service.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +16,9 @@ import java.util.List;
 public class UsuarioService {
 
     private final UsuarioRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
-    public void cadastrarUsuario(Usuario usuario){
+    public Usuario cadastrarUsuario(Usuario usuario){
         if (usuario.getEmail() == null){
             throw new DadosInvalidosException("Dados inválidos para cadastro do usuário");
         }
@@ -25,7 +27,25 @@ public class UsuarioService {
             throw new EntidadeConflitoException("Usuário já cadastrado com o ID: " + usuario.getId());
         }
 
-        this.repository.save(usuario);
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+
+        return this.repository.save(usuario);
+    }
+
+    public Usuario autenticar(Usuario usuario){
+        if (usuario.getEmail() == null || usuario.getSenha() == null) {
+            throw new DadosInvalidosException("Email e senha são obrigatórios para autenticação.");
+        }
+
+        Usuario usuarioExistente = repository.findByEmail(usuario.getEmail())
+                .filter(user -> passwordEncoder.matches(usuario.getSenha(), user.getSenha()))
+                .orElseThrow(() -> new EntidadeNaoEncontrada("Usuário não encontrado com o email: " + usuario.getEmail()));
+
+        if (!passwordEncoder.matches(usuario.getSenha(), usuarioExistente.getSenha())) {
+            throw new DadosInvalidosException("Senha incorreta para o usuário: " + usuario.getEmail());
+        }
+
+        return usuarioExistente;
     }
 
     public List<Usuario> listarUsuario() {
