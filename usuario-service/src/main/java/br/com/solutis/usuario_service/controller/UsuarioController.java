@@ -21,19 +21,19 @@ public class UsuarioController {
     private final TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<UsuarioTokenResponseDto> cadastrar(@RequestBody @Valid UsuarioRequestDto dto){
+    public ResponseEntity<UsuarioResponseDto> cadastrar(@RequestBody @Valid UsuarioRequestDto dto){
         Usuario usuario = UsuarioMapper.toEntity(dto);
         Usuario usuarioSalvo = service.cadastrarUsuario(usuario);
-        String token = tokenService.gerarToken(usuarioSalvo.getEmail());
-        UsuarioTokenResponseDto response = UsuarioMapper.toTokenResponseDto(usuarioSalvo, token);
+        UsuarioResponseDto response = UsuarioMapper.toResponseDto(usuarioSalvo);
         return ResponseEntity.status(201).body(response);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UsuarioResponseDto> login(@RequestBody @Valid UsuarioLoginDto dto) {
+    public ResponseEntity<UsuarioTokenResponseDto> login(@RequestBody @Valid UsuarioLoginDto dto) {
         Usuario usuario = UsuarioMapper.toEntityLogin(dto);
         Usuario usuarioAutenticado = service.autenticar(usuario);
-        UsuarioResponseDto response = UsuarioMapper.toResponseDto(usuarioAutenticado);
+        String token = tokenService.gerarToken(usuarioAutenticado.getEmail());
+        UsuarioTokenResponseDto response = UsuarioMapper.toTokenResponseDto(usuarioAutenticado, token);
         return ResponseEntity.status(200).body(response);
     }
 
