@@ -1,10 +1,16 @@
 package br.com.solutis.matricula_service.dto;
 
-public record MatriculaResponseDto(
-        Long id,
-        String nomeAluno,
-        String nomeCurso,
-        String status,
-        String dataMatricula
-) {
+import lombok.AllArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@AllArgsConstructor
+public class MatriculaResponseDto {
+
+    private Long id;
+    private String nomeAluno;
+    private String nomeCurso;
+    private String status;
+    private String dataMatricula;
+
 }
