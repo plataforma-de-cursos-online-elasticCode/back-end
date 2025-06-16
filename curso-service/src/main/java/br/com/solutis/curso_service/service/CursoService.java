@@ -39,11 +39,9 @@ public class CursoService {
     }
 
     public CursoResponseDto buscarCursoPorNome(String nome) {
-        Curso cursoPorNome = repository.findByNome(nome);
-
-        Optional<CursoResponseDto> response = Optional.of(CursoMapper.toResponse(cursoPorNome));
-
-        return response.orElseThrow(() -> new CursoNaoEncontradoException("Curso de nome %s não encontrado".formatted(nome)));
+        return repository.findByNome(nome)
+                .map(CursoMapper::toResponse)
+                .orElseThrow(() -> new CursoNaoEncontradoException("Curso de nome %s não encontrado".formatted(nome)));
     }
 
     public void deletarCursoPorId(Long id) {
@@ -51,9 +49,9 @@ public class CursoService {
 
         if (curso.isPresent()) {
             repository.deleteById(id);
+        } else {
+            throw new CursoNaoEncontradoException("Curso de id %d não encontrado".formatted(id));
         }
-
-        curso.orElseThrow(() -> new CursoNaoEncontradoException("Curso de id %d não encontrado".formatted(id)));
     }
 
     public Curso atualizarCursoPorId(Long id, CursoRequestDto request) {

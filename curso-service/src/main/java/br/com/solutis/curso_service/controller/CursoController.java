@@ -24,7 +24,7 @@ public class CursoController {
         try {
 
             CursoResponseDto response = service.cadastrarCurso(request);
-            return ResponseEntity.status(204).body(response);
+            return ResponseEntity.status(200).body(response);
 
         } catch (DataIntegrityViolationException e) {
 
@@ -45,21 +45,20 @@ public class CursoController {
         return ResponseEntity.status(200).body(response);
     }
 
-    @GetMapping("/{nome}")
-    public ResponseEntity<CursoResponseDto> buscarCursoPorNome(@PathVariable String nome) {
+    @GetMapping("/buscarPorNome")
+    public ResponseEntity<CursoResponseDto> buscarCursoPorNome(@RequestParam String nome) {
         CursoResponseDto response = service.buscarCursoPorNome(nome);
-
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("deletar/{id}")
     public ResponseEntity<Void> deletarCursoPorId(@PathVariable Long id) {
         service.deletarCursoPorId(id);
 
         return ResponseEntity.status(204).build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("atualizar/{id}")
     public ResponseEntity<Curso> atualizarCursoPorId(@PathVariable Long id, @RequestBody CursoRequestDto request) {
         return ResponseEntity.status(200).body(service.atualizarCursoPorId(id, request));
     }
