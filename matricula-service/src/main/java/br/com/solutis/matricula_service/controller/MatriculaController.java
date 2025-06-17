@@ -1,5 +1,6 @@
 package br.com.solutis.matricula_service.controller;
 
+import br.com.solutis.curso_service.entity.Curso;
 import br.com.solutis.matricula_service.dto.MatriculaAlunoResponseDto;
 import br.com.solutis.matricula_service.dto.MatriculaCursoResponseDto;
 import br.com.solutis.matricula_service.dto.MatriculaRequestDto;
