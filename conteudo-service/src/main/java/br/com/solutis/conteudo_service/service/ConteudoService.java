@@ -52,4 +52,13 @@ public class ConteudoService {
             throw new ConteudoNaoEncontradoException("Conteudo de id %d não encontrado".formatted(id));
         }
     }
+
+    public Conteudo atualizarConteudoPorId(Long id, ConteudoRequestDto request) {
+        Conteudo conteudoExistente = repository.findById(id).orElseThrow(
+                () -> new ConteudoNaoEncontradoException("Conteudo não encontrado"));
+
+        ConteudoMapper.toConteudoAtualizado(conteudoExistente, request);
+
+        return repository.save(conteudoExistente);
+    }
 }

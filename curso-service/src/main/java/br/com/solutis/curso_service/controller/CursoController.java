@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cursos")
 public class CursoController {
 
     @Autowired
@@ -60,6 +59,8 @@ public class CursoController {
 
     @PutMapping("atualizar/{id}")
     public ResponseEntity<Curso> atualizarCursoPorId(@PathVariable Long id, @RequestBody CursoRequestDto request) {
-        return ResponseEntity.status(200).body(service.atualizarCursoPorId(id, request));
+        Curso cursoAtualizado = service.atualizarCursoPorId(id, request);
+
+        return ResponseEntity.status(200).body(cursoAtualizado);
     }
 }

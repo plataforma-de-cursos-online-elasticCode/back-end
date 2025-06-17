@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/conteudos")
 public class ConteudoController {
 
     @Autowired
@@ -39,5 +38,12 @@ public class ConteudoController {
         service.deletarConteudoPorId(id);
 
         return ResponseEntity.status(204).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Conteudo> atualizarConteudo(@PathVariable Long id, @RequestBody ConteudoRequestDto request) {
+        Conteudo conteudoAtualizado = service.atualizarConteudoPorId(id, request);
+
+        return ResponseEntity.status(200).body(conteudoAtualizado);
     }
 }
