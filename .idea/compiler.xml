@@ -3,16 +3,13 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="certificado-service" />
+
         <module name="usuario-service" />
+        <module name="certificado-service" />
         <module name="curso-service" />
         <module name="avaliacao-service" />
         <module name="gateway-service" />
-        <module name="pagamento-service" />
+
         <module name="matricula-service" />
         <module name="conteudo-service" />
       </profile>
