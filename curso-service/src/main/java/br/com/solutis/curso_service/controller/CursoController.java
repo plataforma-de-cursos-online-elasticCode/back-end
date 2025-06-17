@@ -7,6 +7,7 @@ import br.com.solutis.curso_service.service.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class CursoController {
     private CursoService service;
 
     @PostMapping
+    @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<CursoResponseDto> cadastrarCurso(@RequestBody CursoRequestDto request) {
 
         try {
@@ -33,11 +35,13 @@ public class CursoController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('PROFESSOR', 'ALUNO')")
     public ResponseEntity<List<CursoResponseDto>> listarTodosCursos() {
         return ResponseEntity.status(200).body(service.listarTodosCursos());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('PROFESSOR', 'ALUNO')")
     public ResponseEntity<CursoResponseDto> buscarCursoPorId(@PathVariable Long id) {
         CursoResponseDto response = service.buscarCursoPorId(id);
 
@@ -45,12 +49,14 @@ public class CursoController {
     }
 
     @GetMapping("/buscarPorNome")
+    @PreAuthorize("hasAnyRole('PROFESSOR', 'ALUNO')")
     public ResponseEntity<CursoResponseDto> buscarCursoPorNome(@RequestParam String nome) {
         CursoResponseDto response = service.buscarCursoPorNome(nome);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("deletar/{id}")
+    @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<Void> deletarCursoPorId(@PathVariable Long id) {
         service.deletarCursoPorId(id);
 
@@ -58,6 +64,7 @@ public class CursoController {
     }
 
     @PutMapping("atualizar/{id}")
+    @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<Curso> atualizarCursoPorId(@PathVariable Long id, @RequestBody CursoRequestDto request) {
         Curso cursoAtualizado = service.atualizarCursoPorId(id, request);
 
