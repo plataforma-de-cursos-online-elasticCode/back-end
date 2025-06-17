@@ -1,8 +1,6 @@
 package br.com.solutis.usuario_service.mapper;
 
-import br.com.solutis.usuario_service.dto.UsuarioRequestDto;
-import br.com.solutis.usuario_service.dto.UsuarioResponseDto;
-import br.com.solutis.usuario_service.dto.UsuarioUpdateDto;
+import br.com.solutis.usuario_service.dto.*;
 import br.com.solutis.usuario_service.entity.Usuario;
 
 public class UsuarioMapper {
@@ -45,5 +43,32 @@ public class UsuarioMapper {
         usuario.setNome(dto.getNome());
         usuario.setEmail(dto.getEmail());
         return usuario;
+    }
+
+    public static Usuario toEntityLogin(UsuarioLoginDto dto){
+        if (dto == null) {
+            return null;
+        }
+
+        Usuario usuario = new Usuario();
+        usuario.setEmail(dto.getEmail());
+        usuario.setSenha(dto.getSenha());
+
+        return usuario;
+    }
+
+    public static UsuarioTokenResponseDto toTokenResponseDto(Usuario usuario, String token) {
+        if (usuario == null || token == null) {
+            return null;
+        }
+
+        UsuarioTokenResponseDto dto = new UsuarioTokenResponseDto(
+                usuario.getId(),
+                usuario.getNome(),
+                usuario.getEmail(),
+                usuario.getTipoUsuario(),
+                token
+        );
+        return dto;
     }
 }
