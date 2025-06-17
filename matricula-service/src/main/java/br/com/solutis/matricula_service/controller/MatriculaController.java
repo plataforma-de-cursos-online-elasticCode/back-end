@@ -58,7 +58,7 @@ public class MatriculaController {
         response.setNomeCurso(curso.getNome());
         response.setNomeAluno(aluno.getNome());
 
-        ResponseEntity.status(201).body(response);
+        return ResponseEntity.status(201).body(response);
     }
 
     @GetMapping("/{id}")
@@ -87,7 +87,7 @@ public class MatriculaController {
         response.setNomeCurso(curso.getNome());
         response.setNomeAluno(aluno.getNome());
 
-        ResponseEntity.status(201).body(response);
+        return ResponseEntity.status(201).body(response);
     }
 
     @GetMapping("/listar/aluno/{id}")
