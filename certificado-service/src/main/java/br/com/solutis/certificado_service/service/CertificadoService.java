@@ -22,13 +22,14 @@ public class CertificadoService {
     private final CursoClient cursoClient;
     private final PdfClient pdfClient;
 
-    public CertificadoResponseDto emitirCertificado(CertificadoRequestDto requestDto) {
+    public CertificadoResponseDto emitirCertificado(CertificadoRequestDto requestDto, String token) {
         Certificado certificado = CertificadoMapper.toEntity(requestDto);
         certificado.setCursoId(requestDto.getCursoId());
         certificado.setUsuarioId(requestDto.getUsuarioId());
 
         CursoResponseDto curso = cursoClient.buscarCursoPorId(certificado.getCursoId());
-        UsuarioResponseDto usuario = usuarioClient.buscarUsuarioPorId(certificado.getUsuarioId());
+
+        UsuarioResponseDto usuario = usuarioClient.buscarUsuarioPorId(certificado.getUsuarioId(), token);
 
         String pdfUrl = pdfClient.gerarPdf(curso.getNome(), usuario.getNome(), certificado.getDataEmissao());
 
@@ -37,6 +38,7 @@ public class CertificadoService {
 
         return CertificadoMapper.toResponseDto(certificado, curso, usuario);
     }
+
 
 
 }

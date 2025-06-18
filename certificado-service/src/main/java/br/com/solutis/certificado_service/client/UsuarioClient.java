@@ -20,12 +20,13 @@ public class UsuarioClient {
         this.webClient = webClient;
     }
 
-    public UsuarioResponseDto buscarUsuarioPorId(Long id) {
+    public UsuarioResponseDto buscarUsuarioPorId(Long id, String token) {
         return webClient.get()
                 .uri(usuarioServiceUrl + "/{id}", id)
+                .headers(headers -> headers.set("Authorization", token))
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError, response ->
-                        Mono.error(new UsuarioNaoEncontradoException("Usuario com ID " + id + " não encontrado"))
+                        Mono.error(new UsuarioNaoEncontradoException("Usuário com ID " + id + " não encontrado"))
                 )
                 .onStatus(HttpStatusCode::is5xxServerError, response ->
                         Mono.error(new RuntimeException("Erro interno no usuário-service"))
@@ -33,4 +34,6 @@ public class UsuarioClient {
                 .bodyToMono(UsuarioResponseDto.class)
                 .block();
     }
+
+
 }
