@@ -33,6 +33,7 @@ public class GatewayController {
             case "matriculas" -> "http://localhost:8083";
             case "pagamentos" -> "http://localhost:8082";
             case "usuarios" -> "http://localhost:8081";
+            case "cursos" -> "http://localhost:8085";
             default -> null;
         };
 

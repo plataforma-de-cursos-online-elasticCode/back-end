@@ -1,5 +1,7 @@
 package br.com.solutis.pagamento_service.service;
 
+import br.com.solutis.pagamento_service.client.CursoClient;
+import br.com.solutis.pagamento_service.client.UsuarioClient;
 import br.com.solutis.pagamento_service.dto.PagamentoRequestDto;
 import br.com.solutis.pagamento_service.dto.PagamentoResponseDto;
 import br.com.solutis.pagamento_service.entity.Pagamento;
