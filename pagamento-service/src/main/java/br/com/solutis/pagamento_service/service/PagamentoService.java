@@ -2,6 +2,7 @@ package br.com.solutis.pagamento_service.service;
 
 import br.com.solutis.pagamento_service.client.CursoClient;
 import br.com.solutis.pagamento_service.client.UsuarioClient;
+import br.com.solutis.pagamento_service.client.UsuarioResponseDto;
 import br.com.solutis.pagamento_service.dto.PagamentoRequestDto;
 import br.com.solutis.pagamento_service.dto.PagamentoResponseDto;
 import br.com.solutis.pagamento_service.entity.Pagamento;
@@ -19,8 +20,16 @@ public class PagamentoService {
     private PagamentoRepository repository;
     private final PagamentoMapper mapper = new PagamentoMapper();
 
+    @Autowired
+    private UsuarioClient usuarioClient;
+
     // CREATE
-    public PagamentoResponseDto cadastrar(PagamentoRequestDto dto){
+    public PagamentoResponseDto cadastrar(PagamentoRequestDto dto, String token){
+        usuarioClient.
+                buscarUsuarioPorId(dto.getFkCurso(), token)
+                .blockOptional()
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Usuario com fk %d não encontrado!".formatted(dto.getFkUsuario())));
+
         Pagamento pagamento = mapper.toEntity(dto);
         return mapper.toDto(repository.save(pagamento));
     }

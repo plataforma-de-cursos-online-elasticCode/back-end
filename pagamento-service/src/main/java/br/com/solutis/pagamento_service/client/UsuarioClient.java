@@ -9,12 +9,13 @@ public class UsuarioClient {
     private final WebClient webClient;
 
     public UsuarioClient(WebClient.Builder builder){
-        this.webClient = builder.baseUrl("localhost:8089/api/usuarios/").build(); // Gateway = roteamento
+        this.webClient = builder.baseUrl("http://localhost:8089/api/usuarios").build(); // Gateway = roteamento
     }
 
-    public Mono<UsuarioResponseDto> buscarUsuarioPorId(Long id){
+    public Mono<UsuarioResponseDto> buscarUsuarioPorId(Long id, String token){
         return webClient.get()
                 .uri("/{id}", id)
+                .header("Authorization", token)
                 .retrieve()
                 .bodyToMono(UsuarioResponseDto.class);
     }
