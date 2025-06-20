@@ -12,9 +12,10 @@ public class CursoClient {
         this.webClient = builder.baseUrl("http://localhost:8085").build(); // Acionando objeto personalizado (builder)
     }
 
-    public Mono<CursoResponseDto> buscarCursoPorId(Long id){ // Parâmetro de consulta esperado
+    public Mono<CursoResponseDto> buscarCursoPorId(Long id, String token){ // Parâmetro de consulta esperado
         return webClient.get() // Metodo HTTP acionado
-                .uri("/{id}") // URI para especificar endpoint
+                .uri("/{id}", id) // URI para especificar endpoint
+                .header("Authorization", token)
                 .retrieve()
                 .bodyToMono(CursoResponseDto.class);
     }

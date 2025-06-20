@@ -22,13 +22,21 @@ public class PagamentoService {
 
     @Autowired
     private UsuarioClient usuarioClient;
+    @Autowired
+    private CursoClient cursoClient;
 
     // CREATE
     public PagamentoResponseDto cadastrar(PagamentoRequestDto dto, String token){
-        usuarioClient.
-                buscarUsuarioPorId(dto.getFkCurso(), token)
+        usuarioClient
+                .buscarUsuarioPorId(dto.getFkUsuario(), token)
                 .blockOptional()
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Usuario com fk %d não encontrado!".formatted(dto.getFkUsuario())));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Usuário com fk %d não encontrado!".formatted(dto.getFkUsuario())));
+
+        cursoClient
+                .buscarCursoPorId(dto.getFkCurso(), token)
+                .blockOptional()
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Curso com fk %d não encontrado!".formatted(dto.getFkCurso())));
+
 
         Pagamento pagamento = mapper.toEntity(dto);
         return mapper.toDto(repository.save(pagamento));
