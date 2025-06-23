@@ -22,7 +22,7 @@ public class GatewayController {
     @RequestMapping({"/{service}" ,"/{service}/{path:^(?!api).*$}/**"})
     public Mono<ResponseEntity<String>> proxy(
             @PathVariable String service,
-            // REMOVIDO!  @PathVariable String path,
+            @PathVariable(required = false) String path,
             @RequestHeader HttpHeaders headers,
             @RequestParam(required = false) MultiValueMap<String, String> queryParams,
             @RequestBody(required = false) Mono<String> body,
@@ -47,7 +47,20 @@ public class GatewayController {
                 .uri(baseUrl + fullPath)
                 .headers(httpHeaders -> httpHeaders.addAll(headers))
                 .body(body == null ? Mono.empty() : body, String.class)
-                .retrieve()
-                .toEntity(String.class);
+                .exchangeToMono(response -> {
+                    HttpStatusCode status = response.statusCode();
+
+                    return response.bodyToMono(String.class) // Le o corpo da resposta do microserviço como String, de forma assíncrona (Mono = reativo)
+                            .defaultIfEmpty("") // Se não possuir um corpo na resposta (como um 204), retorna vazio
+                            .map(responseBody -> { // Quando mono estiver pronto mapeia ele para um ResponseEntity
+                                HttpHeaders responseHeaders = new HttpHeaders();
+                                response.headers().asHttpHeaders().forEach(responseHeaders::put); // Capturando headers e inserindo em uma classe especializada
+
+                                // Montagem padrão de resposta com ResponseEntity, com os dados já extraídos do microserviço
+                                return ResponseEntity.status(status)
+                                        .headers(responseHeaders)
+                                        .body(responseBody);
+                            });
+                });
     }
 }
