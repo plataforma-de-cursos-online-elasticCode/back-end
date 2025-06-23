@@ -18,11 +18,19 @@
         </processorPath>
         <module name="usuario-service" />
         <module name="certificado-service" />
-        <module name="curso-service" />
-        <module name="avaliacao-service" />
         <module name="pagamento-service" />
-        <module name="matricula-service" />
+      </profile>
+      <profile name="Annotation profile for matricula-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="curso-service" />
         <module name="conteudo-service" />
+        <module name="avaliacao-service" />
+        <module name="matricula-service" />
       </profile>
     </annotationProcessing>
   </component>
