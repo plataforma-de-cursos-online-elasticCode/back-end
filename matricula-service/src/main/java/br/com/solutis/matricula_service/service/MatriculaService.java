@@ -32,7 +32,7 @@ public class MatriculaService {
     }
 
     public Matricula matricular(MatriculaRequestDto req) {
-        if (repository.existsByAlunoIdAndCursoId(req.alunoId(), req.cursoId())) {
+        if (repository.existsByAlunoIdAndCursoId(req.getAlunoId(), req.getCursoId())) {
             throw new AlunoJaMatriculadoException("Este aluno já está matriculado neste curso.");
         }
 
