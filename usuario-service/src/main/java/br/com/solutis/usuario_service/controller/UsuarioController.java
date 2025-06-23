@@ -15,13 +15,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/usuarios")
 public class UsuarioController {
 
     private final UsuarioService service;
     private final TokenService tokenService;
 
-    @PostMapping
+    @PostMapping("/cadastro")
     public ResponseEntity<UsuarioResponseDto> cadastrar(@RequestBody @Valid UsuarioRequestDto dto){
         Usuario usuario = UsuarioMapper.toEntity(dto);
         Usuario usuarioSalvo = service.cadastrarUsuario(usuario);

@@ -1,5 +1,6 @@
 package br.com.solutis.matricula_service.controller;
 
+import br.com.solutis.curso_service.entity.Curso;
 import br.com.solutis.matricula_service.dto.MatriculaAlunoResponseDto;
 import br.com.solutis.matricula_service.dto.MatriculaCursoResponseDto;
 import br.com.solutis.matricula_service.dto.MatriculaRequestDto;
@@ -58,7 +59,7 @@ public class MatriculaController {
         response.setNomeCurso(curso.getNome());
         response.setNomeAluno(aluno.getNome());
 
-        ResponseEntity.status(201).body(response);
+        return ResponseEntity.status(201).body(response);
     }
 
     @GetMapping("/{id}")
@@ -87,7 +88,7 @@ public class MatriculaController {
         response.setNomeCurso(curso.getNome());
         response.setNomeAluno(aluno.getNome());
 
-        ResponseEntity.status(201).body(response);
+        return ResponseEntity.status(201).body(response);
     }
 
     @GetMapping("/listar/aluno/{id}")

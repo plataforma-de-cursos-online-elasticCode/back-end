@@ -23,7 +23,7 @@ public class UsuarioService {
             throw new DadosInvalidosException("Dados inválidos para cadastro do usuário");
         }
 
-        if (usuario.getId() != null && repository.existsById(usuario.getId())) {
+        if (usuario.getId() != null && repository.existsById(usuario.getId()) || repository.existsByEmail(usuario.getEmail())) {
             throw new EntidadeConflitoException("Usuário já cadastrado com o ID: " + usuario.getId());
         }
 
