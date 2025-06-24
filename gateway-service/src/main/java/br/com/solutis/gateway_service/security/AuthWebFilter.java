@@ -136,6 +136,31 @@ public class AuthWebFilter implements WebFilter {
             return false;
         }
 
+        if (path.startsWith("/api/conteudos")) {
+            // POST em /api/conteudos (cadastrar) só PROFESSOR
+            if (HttpMethod.POST.equals(method) && path.equals("/api/conteudos")) {
+                return roles.contains("ROLE_PROFESSOR");
+            }
+
+            // GET em /api/conteudos (listar todos) e /api/conteudos/{id} (buscar por id) para PROFESSOR e ALUNO
+            if (HttpMethod.GET.equals(method)) {
+                return roles.contains("ROLE_PROFESSOR") || roles.contains("ROLE_ALUNO");
+            }
+
+            // DELETE em /api/conteudos/{id} só PROFESSOR
+            if (HttpMethod.DELETE.equals(method) && path.matches("/api/conteudos/\\d+")) {
+                return roles.contains("ROLE_PROFESSOR");
+            }
+
+            // PUT em /api/conteudos/{id} (atualizar) só PROFESSOR
+            if (HttpMethod.PUT.equals(method) && path.matches("/api/conteudos/\\d+")) {
+                return roles.contains("ROLE_PROFESSOR");
+            }
+
+            // Por padrão, bloqueia todas as outras rotas
+            return false;
+        }
+
         // Outras rotas - pode colocar outras regras aqui
 
         // Se não tiver regra específica, exigir autenticação básica (token válido)
