@@ -36,19 +36,18 @@ public class MatriculaController {
         this.usuarioWebClient = webClientBuilder.baseUrl("http://localhost:8081").build();
     }
 
-    // Esse endpoint não vai funcionar até que o serviço de curso esteja implementado.
     @PostMapping
     public ResponseEntity<MatriculaResponseDto> matricular(@RequestBody MatriculaRequestDto req) {
         Matricula entity = service.matricular(req);
 
-        String urlCurso = "/cursos/" + req.cursoId();
+        String urlCurso = "/cursos/" + req.getCursoId();
         Curso curso = cursoWebClient.get()
                 .uri(urlCurso)
                 .retrieve()
                 .bodyToMono(Curso.class)
                 .block();
 
-        String urlUsuario = "/usuarios/" + req.alunoId();
+        String urlUsuario = "/usuarios/" + req.getAlunoId();
         Usuario aluno = usuarioWebClient.get()
                 .uri(urlUsuario)
                 .retrieve()

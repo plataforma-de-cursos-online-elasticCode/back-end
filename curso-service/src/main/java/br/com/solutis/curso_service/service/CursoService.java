@@ -59,7 +59,7 @@ public class CursoService {
 
         CursoMapper.updateCurso(cursoExistente, request);
 
-        return cursoExistente;
+        return repository.save(cursoExistente);
     }
 
 }

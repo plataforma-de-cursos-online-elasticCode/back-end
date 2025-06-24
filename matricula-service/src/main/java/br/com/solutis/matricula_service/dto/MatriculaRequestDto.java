@@ -1,7 +1,15 @@
 package br.com.solutis.matricula_service.dto;
 
-public record MatriculaRequestDto(
-        Long alunoId,
-        Long cursoId
-) {
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
+public class MatriculaRequestDto {
+
+    private Long alunoId;
+    private Long cursoId;
+
 }

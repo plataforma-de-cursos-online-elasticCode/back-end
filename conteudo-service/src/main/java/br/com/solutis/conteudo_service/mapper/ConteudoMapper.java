@@ -14,4 +14,12 @@ public class ConteudoMapper {
 
         return newConteudo;
     }
+
+    public static Conteudo toConteudoAtualizado(Conteudo conteudoExistente, ConteudoRequestDto request) {
+        conteudoExistente.setNome(request.nome());
+        conteudoExistente.setVideoUrl(request.videoUrl());
+        conteudoExistente.setFkCurso(request.fkCurso());
+
+        return conteudoExistente;
+    }
 }
