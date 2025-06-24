@@ -14,11 +14,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class UsuarioController {
 
     private final UsuarioService service;
     private final TokenService tokenService;
+
+    public UsuarioController(UsuarioService service, TokenService tokenService) {
+        this.service = service;
+        this.tokenService = tokenService;
+    }
 
     @PostMapping("/cadastro")
     public ResponseEntity<UsuarioResponseDto> cadastrar(@RequestBody @Valid UsuarioRequestDto dto){
@@ -37,7 +42,6 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(response);
     }
 
-    @PreAuthorize("hasRole('PROFESSOR')")
     @GetMapping
     public ResponseEntity<List<UsuarioResponseDto>> listar() {
         List<Usuario> usuarios = service.listarUsuario();
