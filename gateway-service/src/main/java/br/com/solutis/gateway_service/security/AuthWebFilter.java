@@ -161,7 +161,17 @@ public class AuthWebFilter implements WebFilter {
             return false;
         }
 
-        // Outras rotas - pode colocar outras regras aqui
+        if (path.startsWith("/avaliacoes")) {
+            // POST em /avaliacoes (atribuição de nota) só PROFESSOR
+            if (HttpMethod.POST.equals(method) && path.equals("/avaliacoes")) {
+                return roles.contains("ROLE_PROFESSOR");
+            }
+
+            // Outras rotas relacionadas à avaliação podem ser adicionadas aqui conforme necessário
+
+            // Por padrão, bloquear todas as outras rotas
+            return false;
+        }
 
         // Se não tiver regra específica, exigir autenticação básica (token válido)
         return true;
