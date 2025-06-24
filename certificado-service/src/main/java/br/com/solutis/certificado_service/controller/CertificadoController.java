@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/certificados")
 public class CertificadoController {
 
     private final CertificadoService certificadoService;
