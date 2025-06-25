@@ -150,68 +150,11 @@ João, um professor empreendedor, idealizou essa plataforma para vender seus cur
 Use o Insomnia para testar os endpoints, começando pelo gateway-service (ex: http://localhost:8089).
 
 ---
+## 👥 Responsabilidades por Desenvolvedor
 
-# 📘 Manual de Instalação — RabbitMQ e MySQL (sem Docker)
-
----
-
-## 🐰 Instalação do RabbitMQ
-
-### 🔧 Requisitos
-- **Erlang** (obrigatório)
-- **RabbitMQ Server**
-
----
-
-### 🪟 Windows
-
-#### 1. Instalar Erlang
-- Baixe em: https://www.erlang.org/downloads
-- Verifique a versão compatível com RabbitMQ aqui: https://www.rabbitmq.com/which-erlang.html
-- Instale normalmente.
-
-#### 2. Instalar RabbitMQ
-- Baixe em: https://www.rabbitmq.com/install-windows.html
-- Instale o pacote `.exe`.
-- Adicione ao PATH:
-  ```bash
-  C:\Program Files\RabbitMQ Server\rabbitmq_server-x.y.z\sbin
-
-#### 3. Habilitar o painel de administração
-   ```bash
-   rabbitmq-plugins enable rabbitmq_management
-
-#### 4. Iniciar o serviço
-   ```bash
-   rabbitmq-server
-
-## 🐬 Instalação do MySQL
-
----
-
-### 🪟 Windows
-
-#### 1. Baixar o instalador
-Link: https://dev.mysql.com/downloads/installer/
-
-#### 2. Instalar
-- Escolha a opção **Developer Default** ou **Server Only**
-- Configure:
-  - Usuário: `root`
-  - Senha: `root` (ou outra de sua escolha)
-  - Porta: `3306`
-
-#### 3. (Opcional) Instalar o MySQL Workbench
-
----
-
-### 🐧 Linux (Ubuntu/Debian)
-
-#### 1. Instalar o servidor
-```bash
-sudo apt update
-sudo apt install mysql-server -y
-
-
-
-
+| Nome     | Microserviços / Tarefas                                                                 |
+|----------|-------------------------------------------------------------------------------------------|
+| **Matheus** | - `certificado-service`  <br> - `usuario-service` <br> - Implementação de autenticação JWT <br> - Suporte a certificados em formato DER <br> - Integração com sistema Planner |
+| **Tales**   | - `curso-service` <br> - `conteudo-service` <br> - Criação e gestão de aulas e cursos  |
+| **Raul**    | - `gateway-service` <br> - `pagamento-service` <br> - Documentação geral da API com Swagger/OpenAPI |
+| **Enzo**    | - `matricula-service` <br> - `avaliacao-service` <br> - Criação do diagrama de solução e arquitetura |
