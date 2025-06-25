@@ -141,3 +141,10 @@ João, um professor empreendedor, idealizou essa plataforma para vender seus cur
    cd ../gateway-service
    mvn clean install
 
+3. Execute os serviços:
+   Pelo terminal, dentro de cada pasta:
+   ```bash
+   mvn spring-boot:run
+
+4. Teste as requisições:
+Use o Insomnia para testar os endpoints, começando pelo gateway-service (ex: http://localhost:8080).
