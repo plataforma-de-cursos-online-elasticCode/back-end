@@ -185,4 +185,33 @@ Use o Insomnia para testar os endpoints, começando pelo gateway-service (ex: ht
    ```bash
    rabbitmq-server
 
+## 🐬 Instalação do MySQL
+
+---
+
+### 🪟 Windows
+
+#### 1. Baixar o instalador
+Link: https://dev.mysql.com/downloads/installer/
+
+#### 2. Instalar
+- Escolha a opção **Developer Default** ou **Server Only**
+- Configure:
+  - Usuário: `root`
+  - Senha: `root` (ou outra de sua escolha)
+  - Porta: `3306`
+
+#### 3. (Opcional) Instalar o MySQL Workbench
+
+---
+
+### 🐧 Linux (Ubuntu/Debian)
+
+#### 1. Instalar o servidor
+```bash
+sudo apt update
+sudo apt install mysql-server -y
+
+
+
 
