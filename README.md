@@ -116,27 +116,28 @@ João, um professor empreendedor, idealizou essa plataforma para vender seus cur
    cd back-end
 
 2. Compile os serviços individualmente
+   ```bash
    cd usuario-service
-mvn clean install
+   mvn clean install
 
-cd ../curso-service
-mvn clean install
+   cd ../curso-service
+   mvn clean install
 
-cd ../matricula-service
-mvn clean install
+   cd ../matricula-service
+   mvn clean install
 
-cd ../conteudo-service
-mvn clean install
+   cd ../conteudo-service
+   mvn clean install
 
-cd ../certificado-service
-mvn clean install
+   cd ../certificado-service
+   mvn clean install
 
-cd ../avaliacao-service
-mvn clean install
+   cd ../avaliacao-service
+   mvn clean install
 
-cd ../pagamento-service
-mvn clean install
+   cd ../pagamento-service
+   mvn clean install
 
-cd ../gateway-service
-mvn clean install
+   cd ../gateway-service
+   mvn clean install
 
