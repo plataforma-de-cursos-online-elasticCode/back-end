@@ -113,3 +113,30 @@ João, um professor empreendedor, idealizou essa plataforma para vender seus cur
 1. Clone o repositório:
    ```bash
    git clone https://github.com/plataforma-de-cursos-online-elasticCode/back-end
+   cd back-end
+
+2. Compile os serviços individualmente
+   cd usuario-service
+mvn clean install
+
+cd ../curso-service
+mvn clean install
+
+cd ../matricula-service
+mvn clean install
+
+cd ../conteudo-service
+mvn clean install
+
+cd ../certificado-service
+mvn clean install
+
+cd ../avaliacao-service
+mvn clean install
+
+cd ../pagamento-service
+mvn clean install
+
+cd ../gateway-service
+mvn clean install
+
