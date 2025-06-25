@@ -177,3 +177,12 @@ Use o Insomnia para testar os endpoints, começando pelo gateway-service (ex: ht
   ```bash
   C:\Program Files\RabbitMQ Server\rabbitmq_server-x.y.z\sbin
 
+#### 3. Habilitar o painel de administração
+   ```bash
+   rabbitmq-plugins enable rabbitmq_management
+
+#### 4. Iniciar o serviço
+   ```bash
+   rabbitmq-server
+
+
