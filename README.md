@@ -147,4 +147,33 @@ João, um professor empreendedor, idealizou essa plataforma para vender seus cur
    mvn spring-boot:run
 
 4. Teste as requisições:
-Use o Insomnia para testar os endpoints, começando pelo gateway-service (ex: http://localhost:8080).
+Use o Insomnia para testar os endpoints, começando pelo gateway-service (ex: http://localhost:8089).
+
+---
+
+# 📘 Manual de Instalação — RabbitMQ e MySQL (sem Docker)
+
+---
+
+## 🐰 Instalação do RabbitMQ
+
+### 🔧 Requisitos
+- **Erlang** (obrigatório)
+- **RabbitMQ Server**
+
+---
+
+### 🪟 Windows
+
+#### 1. Instalar Erlang
+- Baixe em: https://www.erlang.org/downloads
+- Verifique a versão compatível com RabbitMQ aqui: https://www.rabbitmq.com/which-erlang.html
+- Instale normalmente.
+
+#### 2. Instalar RabbitMQ
+- Baixe em: https://www.rabbitmq.com/install-windows.html
+- Instale o pacote `.exe`.
+- Adicione ao PATH:
+  ```bash
+  C:\Program Files\RabbitMQ Server\rabbitmq_server-x.y.z\sbin
+
