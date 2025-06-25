@@ -112,4 +112,4 @@ João, um professor empreendedor, idealizou essa plataforma para vender seus cur
 ### Passos:
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/plataforma-cursos-online.git
+   git clone https://github.com/plataforma-de-cursos-online-elasticCode/back-end
