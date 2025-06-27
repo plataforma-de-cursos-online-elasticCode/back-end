@@ -45,6 +45,7 @@ public class PagamentoController {
     }
 
     // DELETE
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id){
         service.deletar(id);
         return ResponseEntity.status(204).build();

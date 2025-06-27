@@ -160,15 +160,11 @@ public class AuthWebFilter implements WebFilter {
             return false;
         }
 
-        if (path.startsWith("/avaliacoes")) {
+        if (path.startsWith("/api/avaliacoes")) {
             // POST em /avaliacoes (atribuição de nota) só PROFESSOR
-            if (HttpMethod.POST.equals(method) && path.equals("/avaliacoes")) {
+            if (HttpMethod.POST.equals(method) && path.equals("/api/avaliacoes")) {
                 return roles.contains("ROLE_PROFESSOR");
             }
-
-            // Outras rotas relacionadas à avaliação podem ser adicionadas aqui conforme necessário
-
-            // Por padrão, bloquear todas as outras rotas
             return false;
         }
 

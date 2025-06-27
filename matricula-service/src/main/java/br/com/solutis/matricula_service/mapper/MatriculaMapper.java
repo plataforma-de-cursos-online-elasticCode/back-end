@@ -28,8 +28,8 @@ public class MatriculaMapper {
                 null,
                 LocalDate.now(),
                 Status.ATIVA,
-                req.alunoId(),
-                req.cursoId()
+                req.getAlunoId(),
+                req.getCursoId()
         ) : null;
     }
 

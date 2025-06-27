@@ -1,5 +1,7 @@
 package br.com.solutis.matricula_service.service;
 
+import br.com.solutis.curso_service.entity.Curso;
+import br.com.solutis.curso_service.repository.CursoRepository;
 import br.com.solutis.matricula_service.entity.Matricula;
 import br.com.solutis.matricula_service.repository.MatriculaRepository;
 import br.com.solutis.usuario_service.entity.Usuario;
@@ -38,14 +40,14 @@ public class EMailService {
     public void enviarEmailConfirmacao(Matricula entity) {
         SimpleMailMessage message = new SimpleMailMessage();
 
-        String urlCurso = "/cursos/" + req.cursoId();
+        String urlCurso = "/cursos/" + entity.getCursoId();
         Curso curso = cursoWebClient.get()
                 .uri(urlCurso)
                 .retrieve()
                 .bodyToMono(Curso.class)
                 .block();
 
-        String urlUsuario = "/usuarios/" + req.alunoId();
+        String urlUsuario = "/usuarios/" + entity.getAlunoId();
         Usuario aluno = usuarioWebClient.get()
                 .uri(urlUsuario)
                 .retrieve()
