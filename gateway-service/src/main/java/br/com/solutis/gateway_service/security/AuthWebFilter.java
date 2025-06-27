@@ -69,7 +69,6 @@ public class AuthWebFilter implements WebFilter {
                     .parseClaimsJws(token)
                     .getBody();
 
-            @SuppressWarnings("unchecked")
             List<String> roles = (List<String>) claims.get("roles");
 
             if (roles == null || roles.isEmpty()) {
